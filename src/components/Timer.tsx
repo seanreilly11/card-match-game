@@ -1,29 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { TOTAL_CARDS } from "../util/getRandomCards";
 
-const Timer: React.FC = () => {
-    const [seconds, setSeconds] = useState<number>(0);
-
+type TimerProps = {
+    seconds: number;
+    setSeconds: React.Dispatch<React.SetStateAction<number>>;
+    clearedCards: number;
+    plus5: boolean;
+};
+const Timer = ({ seconds, setSeconds, clearedCards, plus5 }: TimerProps) => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setSeconds((prevSeconds) => prevSeconds + 1);
         }, 1000);
+        if (clearedCards >= TOTAL_CARDS) clearInterval(intervalId);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [clearedCards]);
 
-    // Convert seconds to hours, minutes, and remaining seconds
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
+    const minutes: number = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds: number = seconds % 60;
 
     return (
         <div>
             <h2>Timer:</h2>
-            <p>{`${hours.toString().padStart(2, "0")}:${minutes
-                .toString()
-                .padStart(2, "0")}:${remainingSeconds
-                .toString()
-                .padStart(2, "0")}`}</p>
+            <div className="timer-text">
+                <p>{`${minutes.toString().padStart(2, "0")}:${remainingSeconds
+                    .toString()
+                    .padStart(2, "0")}`}</p>
+                {plus5 && <p className="flash">+5</p>}
+            </div>
         </div>
     );
 };

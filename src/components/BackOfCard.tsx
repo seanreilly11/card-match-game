@@ -5,11 +5,7 @@ type CardProps = {
 };
 
 const BackOfCard = ({ onClick }: CardProps) => {
-    return (
-        <div className="card back" onClick={onClick}>
-            Back of card
-        </div>
-    );
+    return <div className="card back" onClick={onClick}></div>;
 };
 
 export default BackOfCard;

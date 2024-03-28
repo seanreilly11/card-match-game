@@ -1,7 +1,6 @@
-// Define suits and ranks
-const suits: string[] = ["Hearts", "Diamonds", "Clubs", "Spades"];
+const suits: string[] = ["hearts", "diamonds", "clubs", "spades"];
 const ranks: string[] = [
-    "Ace",
+    "ace",
     "2",
     "3",
     "4",
@@ -11,42 +10,41 @@ const ranks: string[] = [
     "8",
     "9",
     "10",
-    "Jack",
-    "Queen",
-    "King",
+    "jack",
+    "queen",
+    "king",
 ];
 
-// Function to generate a random integer between min and max (inclusive)
+export const TOTAL_CARDS: number = 4; // must be even
+
 function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Function to shuffle an array using Fisher-Yates algorithm
-function shuffleArray<T>(array: T[]): T[] {
-    for (let i = array.length - 1; i > 0; i--) {
+function shuffleCards(cards: string[]): string[] {
+    for (let i = cards.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [cards[i], cards[j]] = [cards[j], cards[i]];
     }
-    return array;
+    return cards;
 }
 
 // Generate a deck of cards
 let deck: string[] = [];
 for (let suit of suits) {
     for (let rank of ranks) {
-        deck.push(`${rank}_${suit}`);
+        deck.push(`${rank}_of_${suit}`);
     }
 }
 
-// Shuffle the deck
-// deck = shuffleArray(deck);
-
-// Select 13 random cards from the shuffled deck
 const chosenCards: string[] = [];
-for (let i = 0; i < 18; i++) {
+for (let i = 0; i < TOTAL_CARDS / 2; i++) {
     const randomIndex: number = getRandomInt(0, deck.length - 1);
     chosenCards.push(deck[randomIndex]);
     deck.splice(randomIndex, 1);
 }
 
-export const randomCards = shuffleArray([...chosenCards, ...chosenCards]);
+export const randomCards: string[] = shuffleCards([
+    ...chosenCards,
+    ...chosenCards,
+]);

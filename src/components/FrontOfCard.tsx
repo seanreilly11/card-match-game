@@ -1,11 +1,13 @@
 import React from "react";
 
-type CardProps = {
-    card: string;
-};
+const FrontOfCard = ({ card }: { card: string }) => {
+    const image = require(`../assets/png/${card.split("|")[0]}.png`);
 
-const FrontOfCard = ({ card }: CardProps) => {
-    return <div className="card">{card}</div>;
+    return (
+        <div className="card">
+            <img src={image} alt={card.split("|")[0]} className="card-image" />
+        </div>
+    );
 };
 
 export default FrontOfCard;
